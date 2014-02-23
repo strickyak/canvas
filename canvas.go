@@ -84,7 +84,7 @@ func (o Canvas) Includes(x, y int) bool {
 // Get a point, as red, green, and blue bytes.
 func (o Canvas) Get(x, y int) (r byte, g byte, b byte) {
 	if o.Includes(x, y) {
-		r16, g16, b16, _ := o.Pixels.At(x, y).RGBA()
+		r16, g16, b16, _ := o.Pixels.At(x, o.Height-1-y).RGBA()
 		r, g, b = byte(r16>>8), byte(g16>>8), byte(b16>>8)
 	}
 	return
@@ -93,13 +93,13 @@ func (o Canvas) Get(x, y int) (r byte, g byte, b byte) {
 // Set one point to given color.
 func (o Canvas) Set(x, y int, clr Color) {
 	if o.Includes(x, y) {
-		o.Pixels.SetNRGBA(x, y, clr.N)
+		o.Pixels.SetNRGBA(x, o.Height-1-y, clr.N)
 	}
 }
 
 // Fill a rectangle with a color.
 func (o Canvas) Fill(x1, y1, x2, y2 int, clr Color) {
-	bounds := image.Rect(x1, y1, x2, y2)
+	bounds := image.Rect(x1, o.Height-1-y1, x2, o.Height-1-y2)
 	Say("Min", bounds.Min)
 	Say("Max", bounds.Max)
 	Say("Color", clr)
