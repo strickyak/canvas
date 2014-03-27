@@ -26,7 +26,7 @@ func (o *Canvas) PaintTriangle(x1, y1, x2, y2, x3, y3 int, clr Color) {
 
 // paintTriangleDiffYs expects y1 < y2 < y3.
 func (o *Canvas) paintTriangleDiffYs(x1, y1, x2, y2, x3, y3 int, clr Color) {
-	Say("paintTriangleDiffYs", x1, y1, x2, y2, x3, y3)
+	// Say("paintTriangleDiffYs", x1, y1, x2, y2, x3, y3)
 	// x4 is on the line from (x1, y1) to (x3, y3) where y = y2.
 	x4 := x1 + int(float64(y2-y1)*float64(x3-x1)/float64(y3-y1))
 
@@ -37,7 +37,7 @@ func (o *Canvas) paintTriangleDiffYs(x1, y1, x2, y2, x3, y3 int, clr Color) {
 
 // paintTriangleSameYY does not know y <=> y3, nor anything about xs.
 func (o *Canvas) paintTriangleSameYY(y, x1, x2 int, x3, y3 int, clr Color) {
-	Say("paintTriangleSameYY", y, x1, x2, x3, y3)
+	// Say("paintTriangleSameYY", y, x1, x2, x3, y3)
 	if y == y3 {
 		// Avoid DivisionByZero by handling y==y3 here.
 		o.paintTriangleSameYYY(y, x1, x2, x3, clr)
@@ -51,17 +51,17 @@ func (o *Canvas) paintTriangleSameYY(y, x1, x2 int, x3, y3 int, clr Color) {
 
 	if y < y3 {
 		dx1 := float64(x3-x1) / float64(y3-y)
-		Say("A: y<y3", "num", x3-x1, "den", y3-y, "dx1", dx1)
+		// Say("A: y<y3", "num", x3-x1, "den", y3-y, "dx1", dx1)
 		dx2 := float64(x3-x2) / float64(y3-y)
-		Say("A: y<y3", "num", x3-x2, "den", y3-y, "dx2", dx2)
+		// Say("A: y<y3", "num", x3-x2, "den", y3-y, "dx2", dx2)
 		for i := y; i <= y3; i++ {
 			o.paintHorzLine(i, x1+int(float64(i-y)*dx1), x2+int(float64(i-y)*dx2), clr)
 		}
 	} else {
 		dx1 := float64(x3-x1) / float64(y-y3)
-		Say("B: y>y3", "num", x3-x1, "den", y-y3, "dx1", dx1)
+		// Say("B: y>y3", "num", x3-x1, "den", y-y3, "dx1", dx1)
 		dx2 := float64(x3-x2) / float64(y-y3)
-		Say("B: y>y3", "num", x3-x2, "den", y-y3, "dx2", dx2)
+		// Say("B: y>y3", "num", x3-x2, "den", y-y3, "dx2", dx2)
 		for i := y3; i <= y; i++ {
 			o.paintHorzLine(i, x3-int(float64(i-y3)*dx1), x3-int(float64(i-y3)*dx2), clr)
 		}

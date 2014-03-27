@@ -100,9 +100,9 @@ func (o Canvas) Set(x, y int, clr Color) {
 // Fill a rectangle with a color.
 func (o Canvas) Fill(x1, y1, x2, y2 int, clr Color) {
 	bounds := image.Rect(x1, o.Height-1-y1, x2, o.Height-1-y2)
-	Say("Min", bounds.Min)
-	Say("Max", bounds.Max)
-	Say("Color", clr)
+	// Say("Min", bounds.Min)
+	// Say("Max", bounds.Max)
+	// Say("Color", clr)
 	draw.Draw(o.Pixels, bounds, &image.Uniform{clr.N}, image.ZP, draw.Src)
 }
 
@@ -115,8 +115,8 @@ func (o Canvas) Grid(gap int, clr Color) {
 		}
 		o.paintVertLine(x, 0, o.Height-1, clr)
 	}
-	for y := 0; y <= o.Width; y += gap {
-		if y == o.Width && gap > 1 {
+	for y := 0; y <= o.Height; y += gap {
+		if y == o.Height && gap > 1 {
 			y--
 		}
 		o.paintHorzLine(y, 0, o.Width-1, clr)
@@ -141,7 +141,7 @@ func Say(aa ...interface{}) {
 
 // paintHorzLine expects x1 < x2.
 func (o *Canvas) paintHorzLine(y, x1, x2 int, clr Color) {
-	Say("paintHorzLine", y, x1, x2)
+	// Say("paintHorzLine", y, x1, x2)
 	if y < 0 || y >= o.Height {
 		return
 	}
@@ -158,7 +158,7 @@ func (o *Canvas) paintHorzLine(y, x1, x2 int, clr Color) {
 
 // paintHorzLine expects y1 < y2.
 func (o *Canvas) paintVertLine(x, y1, y2 int, clr Color) {
-	Say("paintVertLine", x, y1, y2)
+	// Say("paintVertLine", x, y1, y2)
 	if x < 0 || x >= o.Width {
 		return
 	}
