@@ -33,6 +33,9 @@ type Canvas struct {
 	Pixels          *image.NRGBA
 	Width, Height   int
 	FWidth, FHeight float64
+
+	// For the scaled "S" methods:
+	X1, X9, Y1, Y9 float64 // Scaled Canvas bounds.
 }
 
 // RGB constructs a Color object from given red, green, and blue bytes.
@@ -57,6 +60,18 @@ func NewCanvas(w, h int) *Canvas {
 	return z
 }
 
+func NewCanvasWithScale(w, h int, x1, x9, y1, y9 float64) *Canvas {
+	z := NewCanvas(w, h)
+	z.X1, z.X9, z.Y1, z.Y9 = x1, x9, y1, y9
+	return z
+}
+
+func (o Canvas) UnScale(x, y float64) (int, int) {
+	x0 := (x - o.X1) * float64(o.Width-1) / (o.X9 - o.X1)
+	y0 := (y - o.Y1) * float64(o.Height-1) / (o.Y9 - o.Y1)
+	return int(x0 + 0.5), int(y0 + 0.5)
+}
+
 // Dup returns a duplicate of the receiver.
 func (o Canvas) Dup() *Canvas {
 	w, h := o.Width, o.Height
@@ -71,9 +86,17 @@ func (o Canvas) Dup() *Canvas {
 }
 
 // FSet takes float64 x and y, which are visible on the unit square [0, 1) x [0, 1).
-// Might generalize from Unit Square later.
 func (o Canvas) FSet(x, y float64, clr Color) {
 	o.Set(int(x*o.FWidth), int(y*o.FHeight), clr)
+}
+
+// SSet use the Scale.
+func (o Canvas) SSet(x, y float64, clr Color) {
+	i, j := o.UnScale(x, y)
+	o.Set(i, j, clr)
+	o.Set(i+1, j, clr)
+	o.Set(i, j+1, clr)
+	o.Set(i+1, j+1, clr)
 }
 
 // Includes tells if the canvas includes the given coordinate.
