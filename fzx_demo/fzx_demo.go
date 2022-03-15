@@ -1,3 +1,4 @@
+// go run fzx_demo/fzx_demo.go -f /tmp/fzx/JetPowerJack-ru-KOI8-B.fzx > _out.png
 package main
 
 import (
