@@ -1,5 +1,8 @@
 package canvas
 
+// FZX documentation:
+// https://github.com/z88dk/z88dk/blob/0cb51ee64b02bfc08645026dd141f671c0de6dc9/libsrc/_DEVELOPMENT/font/fzx/README.md
+
 import (
 	"io/ioutil"
 	"log"
